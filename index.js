@@ -20,9 +20,9 @@ function appSrc(express, bodyParser) {
   app.get('/id/:input/', (req, res) => {
     const input = req.params.input;
     fetch(`https://nd.kodaktor.ru/users/${input}`)
-    .then(response => response.text())
-    .then(text => JSON.parse(text))
-    .then(json => res.send(json.login))
+      .then(response => response.text())
+      .then(text => JSON.parse(text))
+      .then(json => res.send(json.login))
   });
 
   return app;
@@ -30,4 +30,6 @@ function appSrc(express, bodyParser) {
 
 const app = appSrc(express, bodyParser);
 
-app.listen(process.env.PORT);
+app.listen(3000, () => {
+  console.log('Сервер запущен на порту 3000');
+});
