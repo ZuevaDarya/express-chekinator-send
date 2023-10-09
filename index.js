@@ -1,28 +1,33 @@
 import express from 'express';
-import http from 'http';
+import bodyParser from 'body-parser';
 
-const URL = 'https://nd.kodaktor.ru/users/:n';
-const app = express();
+function appSrc(express, bodyParser) {
+  const app = express();
 
-app.use(express.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
 
-app.get('/login/', (req, res) => {
-  res.send('zuevadi');
-});
-
-app.get('/id/:n', (req, res) => {
-  http.get(URL, response => {
-    let data = '';
-    response.on('data', (chunk) => {
-      data += chunk;
-    });
-
-    response.on('end', () => {
-      res.send(data);
-    });
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, OPTIONS, DELETE');
+    next();
   });
-});
 
-app.listen(1212, () => {
-  console.log('Server 1212 was started!');
-});
+  app.get('/login/', (req, res) => {
+    res.send('ЛОГИН');
+  });
+
+  app.get('/id/:input/', (req, res) => {
+    const input = req.params.input;
+    fetch(`https://nd.kodaktor.ru/users/${input}`)
+    .then(response => response.text())
+    .then(text => JSON.parse(text))
+    .then(json => res.send(json.login))
+  });
+
+  return app;
+}
+
+const app = appSrc(express, bodyParser);
+
+app.listen(process.env.PORT);
