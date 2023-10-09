@@ -14,7 +14,7 @@ function appSrc(express, bodyParser) {
   });
 
   app.get('/login/', (req, res) => {
-    res.send('ЛОГИН');
+    res.send('zuevadi');
   });
 
   app.get('/id/:input/', (req, res) => {
