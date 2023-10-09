@@ -28,6 +28,4 @@ function appSrc(express, bodyParser) {
 
 const app = appSrc(express, bodyParser);
 
-app.listen(3000, () => {
-  console.log('Сервер запущен на порту 3000');
-});
+app.listen(process.env.PORT);
