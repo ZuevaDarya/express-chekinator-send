@@ -17,12 +17,10 @@ function appSrc(express, bodyParser) {
     res.send('zuevadi');
   });
 
-  app.get('/id/:input/', (req, res) => {
-    const input = req.params.input;
-    fetch(`https://nd.kodaktor.ru/users/${input}`)
-      .then(response => response.text())
-      .then(text => JSON.parse(text))
-      .then(json => res.send(json.login))
+  app.get('/id/:id', async (req, res) => {
+    const { id } = req.params;
+    const response = await (await fetch(`https://nd.kodaktor.ru/users/${id}`)).json();
+    res.send(response?.login);
   });
 
   return app;
