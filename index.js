@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import fetch from 'node-fetch';
 
 function appSrc(express, bodyParser) {
   const app = express();
@@ -17,7 +18,7 @@ function appSrc(express, bodyParser) {
     res.send('zuevadi');
   });
 
-  app.get('/id/:id', async (req, res) => {
+  app.get('/id/:id/', async (req, res) => {
     const { id } = req.params;
     const response = await (await fetch(`https://nd.kodaktor.ru/users/${id}`)).json();
     res.send(response?.login);
